@@ -10,6 +10,6 @@ install:
   - pipenv sync --dev
 script:
   - pipenv run flake8 .
-  - pytest --cov=curso_django
-after_success:
-  -codecov
+#  - pytest --cov=curso_django
+#after_success:
+#  -codecov
