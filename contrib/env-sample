@@ -2,5 +2,3 @@ DEBUG=False
 SECRET_KEY=Entre com sua chave secreta
 ALLOWED_HOSTS=localhost, 127.0.0.1
 DATABASE_URL=postgres://postgres:postgres@localhost/testdb
-AWS_ACCESS_KEY_ID=AKIA3EWVFQ3FYKOM4XUU
-AWS_SECRET_ACESS_KEY=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
