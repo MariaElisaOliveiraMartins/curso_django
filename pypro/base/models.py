@@ -9,23 +9,21 @@ from django.utils.translation import gettext_lazy as _
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
-    def _create_user(self, username, email, password, **extra_fields):
+    def _create_user(self, email, password, **extra_fields):
         """
-        Create and save a user with the given username, email, and password.
+        Create and save a user with the given email and password.
         """
-        if not username:
-            raise ValueError('The given username must be set')
+        if not email:
+            raise ValueError('The given e-mail must be set')
         email = self.normalize_email(email)
-        username = self.model.normalize_username(username)
-        user = self.model(username=username, email=email, **extra_fields)
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, username, email=None, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', False)
+    def create_user(self, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', False)
-        return self._create_user(username, email, password, **extra_fields)
+        return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
@@ -67,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['email']
+    REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = _('user')
@@ -91,3 +89,24 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+
+'''
+    OBS: o trecho abaixo é o código original da classe UserManager copiado da lib BaseUserManager
+    que por alguma razão difere do código utilizado no curso e, portanto, o mesmo está adaptado
+    nessa implementação, onde o parametro "username" é substituído pelo parametro "email".   
+
+
+    def _create_user(self, username, email, password, **extra_fields):
+        """
+        Create and save a user with the given username, email, and password.
+        """
+        if not username:
+            raise ValueError('The given username must be set')
+        email = self.normalize_email(email)
+        username = self.model.normalize_username(username)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+'''
