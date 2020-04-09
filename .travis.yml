@@ -16,7 +16,7 @@ install:
 before_script:
   - psql -c "CREATE DATABASE testdb;" -U postgres
 script:
-  - pipenv run flake8 .
+#  - pipenv run flake8 .
   - pipenv run pytest
 #  - pytest --cov=curso_django
 #after_success:
